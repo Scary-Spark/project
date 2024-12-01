@@ -272,9 +272,29 @@ void createUser()
     system("cls");
 
     commonStart();
-    cout << "Enter you password: ";
-    cin >> password;
-    cin.ignore();
+    cout << "Enter your password: ";
+    while (true)
+    {
+        char ch;
+        ch = _getch();
+        if (ch == 13)
+            break;
+        else if (ch == 8)
+        {
+            if (password.length() > 0)
+            {
+                password.pop_back();
+                cout << "\b \b";
+            }
+        }
+        else
+        {
+            password.push_back(ch);
+            cout << ch;
+            Sleep(190);
+            cout << "\b*";
+        }
+    }
 }
 
 bool checkUserName(string userName)
