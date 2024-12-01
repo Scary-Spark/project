@@ -55,6 +55,7 @@ void createUser();
 bool checkUserName(string userName);
 bool checkUserMobileNumber(string mobileNumber);
 bool checkUserEmail(string email);
+int regionSelector();
 int main()
 {
     opeaningInterFace();
@@ -186,9 +187,9 @@ void createUser()
     getline(cin, fullName);
     system("cls");
 
-    commonStart();
     while (true)
     {
+        commonStart();
         cout << "Enter user name(must be unique): ";
         cin >> userName;
         cin.ignore();
@@ -205,9 +206,9 @@ void createUser()
     }
     system("cls");
 
-    commonStart();
     while (true)
     {
+        commonStart();
         cout << "Enter mobile number (must be unique): ";
         cin >> mobileNumber;
         cin.ignore();
@@ -224,9 +225,9 @@ void createUser()
     }
     system("cls");
 
-    commonStart();
     while (true)
     {
+        commonStart();
         cout << "Enter your email (must be unique): ";
         cin >> email;
         cin.ignore();
@@ -240,6 +241,40 @@ void createUser()
             break;
     }
     system("cls");
+
+    int regionSelect = regionSelector();
+    switch (regionSelect)
+    {
+    case 0:
+        region = "Fontaine";
+        break;
+    case 1:
+        region = "Mondstadt";
+        break;
+    case 2:
+        region = "Liyue";
+        break;
+    case 3:
+        region = "Sumeru";
+        break;
+    case 4:
+        region = "Snezhnaya";
+        break;
+    case 5:
+        region = "Inazuma";
+        break;
+    case 6:
+        region = "Natlan";
+        break;
+    default:
+        region = "Invalid";
+    }
+    system("cls");
+
+    commonStart();
+    cout << "Enter you password: ";
+    cin >> password;
+    cin.ignore();
 }
 
 bool checkUserName(string userName)
@@ -284,4 +319,53 @@ bool checkUserEmail(string email)
         }
         return false;
     }
+}
+
+int regionSelector()
+{
+    int choosen = 0;
+    string regions[] = {"Fontaine", "Mondstadt", "Liyue", "Sumeru", "Snezhnaya", "Inazuma", "Natlan"};
+    int total = 7;
+
+    while (true)
+    {
+        system("cls");
+        commonStart();
+        cout << "Select your region (use w/s for change and enter to confirm): \n\n";
+        for (int i = 0; i < total; i++)
+        {
+            if (i == choosen)
+            {
+                SetConsoleTextAttribute(color, 10);
+                cout << "  > " << regions[i] << " <\n";
+                SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+            }
+            else
+                cout << " " << regions[i] << endl;
+        }
+
+        char ch;
+        ch = _getch();
+
+        if (ch == 27)
+        {
+            break;
+        }
+        else if (ch == 13)
+        {
+            return choosen;
+        }
+        else if (ch == 'w' || ch == 'W')
+        {
+            if (choosen > 0)
+                choosen--;
+        }
+        else if (ch == 's' || ch == 'S')
+        {
+            if (choosen < total - 1)
+                choosen++;
+        }
+    }
+
+    return -1;
 }
