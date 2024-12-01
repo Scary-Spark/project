@@ -20,9 +20,41 @@ public:
             return false;
     }
 };
+class newUser
+{
+public:
+    string userName;
+    string fullName;
+    string mobileNumber;
+    string email;
+    string region;
+    string password;
+    newUser *nextUser;
+
+    newUser(string fullName,
+            string userName,
+            string region,
+            string mobileNumber,
+            string email,
+            string password)
+    {
+        this->fullName = fullName;
+        this->userName = userName;
+        this->region = region;
+        this->mobileNumber = mobileNumber;
+        this->email = email;
+        this->password = password;
+        this->nextUser = NULL;
+    }
+};
+newUser *head = NULL;
 void commonStart();
 void opeaningInterFace();
 void adminLogin();
+void createUser();
+bool checkUserName(string userName);
+bool checkUserMobileNumber(string mobileNumber);
+bool checkUserEmail(string email);
 int main()
 {
     opeaningInterFace();
@@ -56,6 +88,31 @@ void opeaningInterFace()
         SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
         system("cls");
         adminLogin();
+    }
+    else if (choice == "2")
+    {
+        SetConsoleTextAttribute(color, 91);
+        cout << "Loading..";
+        for (int i = 0; i < 4; i++)
+        {
+            cout << ".";
+            sleep(1);
+        }
+        SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+        system("cls");
+    }
+    else if (choice == "3")
+    {
+        SetConsoleTextAttribute(color, 91);
+        cout << "Loading..";
+        for (int i = 0; i < 4; i++)
+        {
+            cout << ".";
+            sleep(1);
+        }
+        SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+        system("cls");
+        createUser();
     }
 }
 void adminLogin()
@@ -117,5 +174,114 @@ void adminLogin()
             system("cls");
             adminLogin();
         }
+    }
+}
+void createUser()
+{
+    string fullName, userName, region, mobileNumber, email, password;
+
+    commonStart();
+    cout << "Enter your full name: ";
+    cin.ignore();
+    getline(cin, fullName);
+    system("cls");
+
+    commonStart();
+    while (true)
+    {
+        cout << "Enter user name(must be unique): ";
+        cin >> userName;
+        cin.ignore();
+        if (checkUserName(userName))
+        {
+            cout << "user name already exists! press enter to try new one...\n";
+            cin.ignore();
+            cin.get();
+        }
+        else
+        {
+            break;
+        }
+    }
+    system("cls");
+
+    commonStart();
+    while (true)
+    {
+        cout << "Enter mobile number (must be unique): ";
+        cin >> mobileNumber;
+        cin.ignore();
+        if (checkUserMobileNumber(mobileNumber))
+        {
+            cout << "Mobile number already exists! press enter to try new one...\n";
+            cin.ignore();
+            cin.get();
+        }
+        else
+        {
+            break;
+        }
+    }
+    system("cls");
+
+    commonStart();
+    while (true)
+    {
+        cout << "Enter your email (must be unique): ";
+        cin >> email;
+        cin.ignore();
+        if (checkUserEmail(email))
+        {
+            cout << "Email already exists! press enter to try new one...\n";
+            cin.ignore();
+            cin.get();
+        }
+        else
+            break;
+    }
+    system("cls");
+}
+
+bool checkUserName(string userName)
+{
+    if (head != NULL)
+    {
+        newUser *temp = head;
+        while (temp != NULL)
+        {
+            if (temp->userName == userName)
+                return true;
+            temp = temp->nextUser;
+        }
+        return false;
+    }
+}
+
+bool checkUserMobileNumber(string mobileNumber)
+{
+    if (head != NULL)
+    {
+        newUser *temp = head;
+        while (temp != NULL)
+        {
+            if (temp->mobileNumber == mobileNumber)
+                return true;
+            temp = temp->nextUser;
+        }
+        return false;
+    }
+}
+bool checkUserEmail(string email)
+{
+    if (head != NULL)
+    {
+        newUser *temp = head;
+        while (temp != NULL)
+        {
+            if (temp->email == email)
+                return true;
+            temp = temp->nextUser;
+        }
+        return false;
     }
 }
