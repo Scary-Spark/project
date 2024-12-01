@@ -5,3 +5,4 @@ key command:
 git status
 git add .
 git commit -m "added main.cpp"
+git push origin main
