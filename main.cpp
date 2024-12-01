@@ -1,7 +1,10 @@
 #include <iostream>
 #include <windows.h>
 #include <cstdlib>
+#include <unistd.h>
+#include <conio.h>
 using namespace std;
+HANDLE color = GetStdHandle(STD_OUTPUT_HANDLE);
 class admin
 {
 private:
@@ -43,6 +46,15 @@ void opeaningInterFace()
     cin >> choice;
     if (choice == "1")
     {
+        SetConsoleTextAttribute(color, 91);
+        cout << "Loading..";
+        for (int i = 0; i < 4; i++)
+        {
+            cout << ".";
+            sleep(1);
+        }
+        SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+        system("cls");
         adminLogin();
     }
 }
@@ -57,7 +69,28 @@ void adminLogin()
     cout << "Enter user Name: ";
     cin >> userName;
     cout << "Enter password: ";
-    cin >> password;
+    char ch;
+    while (true)
+    {
+        ch = _getch();
+        if (ch == 13)
+            break;
+        else if (ch == 8)
+        {
+            if (password.length() > 0)
+            {
+                password.pop_back();
+                cout << "\b \b";
+            }
+        }
+        else
+        {
+            password.push_back(ch);
+            cout << ch;
+            Sleep(190);
+            cout << "\b*";
+        }
+    }
 
     admin adminAccount;
     if (adminAccount.checkForAdmin(userName, password))
