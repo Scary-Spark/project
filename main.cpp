@@ -203,9 +203,9 @@ void createUser()
         cin.ignore();
         if (checkUserName(userName))
         {
-            cout << "user name already exists! press enter to try new one...\n";
-            cin.ignore();
+            cout << "user name already exists! press enter to try new one.....";
             cin.get();
+            system("cls");
         }
         else
         {
@@ -230,9 +230,9 @@ void createUser()
         cin.ignore();
         if (checkUserMobileNumber(mobileNumber))
         {
-            cout << "Mobile number already exists! press enter to try new one...\n";
-            cin.ignore();
+            cout << "Mobile number already exists! press enter to try new one.....";
             cin.get();
+            system("cls");
         }
         else
         {
@@ -257,9 +257,9 @@ void createUser()
         cin.ignore();
         if (checkUserEmail(email))
         {
-            cout << "Email already exists! press enter to try new one...\n";
-            cin.ignore();
+            cout << "Email already exists! press enter to try new one.....";
             cin.get();
+            system("cls");
         }
         else
         {
@@ -347,6 +347,90 @@ void createUser()
         Sleep(200);
     }
     SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+
+    system("cls");
+
+    commonStart();
+    cout << "Your information: \n";
+    cout << "Full Name       : " << fullName << endl;
+    cout << "User Name       : " << userName << endl;
+    cout << "Cell phone      : " << mobileNumber << endl;
+    cout << "Email           : " << email << endl;
+    cout << "Region          : " << region << endl;
+    cout << "Password        : " << password << endl;
+    cout << endl;
+    cout << "Type 'cancel' to cancel the form and create a new form OR press enter to confirm......";
+
+    string input;
+    getline(cin, input);
+
+    if (input == "exit")
+    {
+        system("cls");
+        opeaningInterFace();
+    }
+    else if (input == "cancel")
+    {
+        system("cls");
+        createUser();
+    }
+    else
+    {
+        SetConsoleTextAttribute(color, 91);
+        cout << "Creating user...";
+        for (int i = 0; i < 7; i++)
+        {
+            cout << ".";
+            Sleep(200);
+        }
+        SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+
+        if (head == NULL)
+        {
+            head = new newUser(fullName, userName, region, mobileNumber, email, password);
+            cout << fullName << ", your account has been successfully created\n";
+            cout << "Press enter to back to login page....";
+
+            string input;
+            getline(cin, input);
+            if (input == "exit")
+            {
+                system("cls");
+                opeaningInterFace();
+            }
+            else
+            {
+                system("cls");
+                opeaningInterFace();
+            }
+        }
+        else
+        {
+            newUser *newNode = new newUser(fullName, userName, region, mobileNumber, email, password);
+            newUser *temp;
+            temp = head;
+            while (temp->nextUser != NULL)
+            {
+                temp = temp->nextUser;
+            }
+            temp->nextUser = newNode;
+            cout << fullName << ", your account has been successfully created\n";
+            cout << "Press enter to back to login page....";
+
+            string input;
+            getline(cin, input);
+            if (input == "exit")
+            {
+                system("cls");
+                opeaningInterFace();
+            }
+            else
+            {
+                system("cls");
+                opeaningInterFace();
+            }
+        }
+    }
 }
 
 bool checkUserName(string userName)
