@@ -185,6 +185,14 @@ void createUser()
     cout << "Enter your full name: ";
     cin.ignore();
     getline(cin, fullName);
+    SetConsoleTextAttribute(color, 91);
+    cout << "Saving info...";
+    for (int i = 0; i < 5; i++)
+    {
+        cout << ".";
+        Sleep(200);
+    }
+    SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
     system("cls");
 
     while (true)
@@ -201,6 +209,14 @@ void createUser()
         }
         else
         {
+            SetConsoleTextAttribute(color, 91);
+            cout << "Saving info...";
+            for (int i = 0; i < 5; i++)
+            {
+                cout << ".";
+                Sleep(200);
+            }
+            SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
             break;
         }
     }
@@ -220,6 +236,14 @@ void createUser()
         }
         else
         {
+            SetConsoleTextAttribute(color, 91);
+            cout << "Saving info...";
+            for (int i = 0; i < 5; i++)
+            {
+                cout << ".";
+                Sleep(200);
+            }
+            SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
             break;
         }
     }
@@ -238,7 +262,17 @@ void createUser()
             cin.get();
         }
         else
+        {
+            SetConsoleTextAttribute(color, 91);
+            cout << "Saving info...";
+            for (int i = 0; i < 5; i++)
+            {
+                cout << ".";
+                Sleep(200);
+            }
+            SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
             break;
+        }
     }
     system("cls");
 
@@ -269,6 +303,15 @@ void createUser()
     default:
         region = "Invalid";
     }
+    SetConsoleTextAttribute(color, 91);
+    cout << "Saving info...";
+    for (int i = 0; i < 5; i++)
+    {
+        cout << ".";
+        Sleep(200);
+    }
+    SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+
     system("cls");
 
     commonStart();
@@ -295,6 +338,15 @@ void createUser()
             cout << "\b*";
         }
     }
+    cout << endl;
+    SetConsoleTextAttribute(color, 91);
+    cout << "Saving info...";
+    for (int i = 0; i < 5; i++)
+    {
+        cout << ".";
+        Sleep(200);
+    }
+    SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 }
 
 bool checkUserName(string userName)
