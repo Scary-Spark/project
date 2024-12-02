@@ -330,7 +330,7 @@ void createUser()
                 cout << "\b \b";
             }
         }
-        else
+        else if (ch != ' ')
         {
             password.push_back(ch);
             cout << ch;
@@ -383,6 +383,7 @@ void createUser()
             cout << ".";
             Sleep(200);
         }
+        cout << endl;
         SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 
         if (head == NULL)
