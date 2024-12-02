@@ -81,7 +81,7 @@ void opeaningInterFace()
     {
         SetConsoleTextAttribute(color, 91);
         cout << "Loading..";
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 3; i++)
         {
             cout << ".";
             sleep(1);
