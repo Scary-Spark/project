@@ -149,6 +149,7 @@ void adminLogin()
             cout << "\b*";
         }
     }
+    cout << endl;
 
     admin adminAccount;
     if (adminAccount.checkForAdmin(userName, password))
