@@ -17,3 +17,9 @@ SetConsoleTextAttribute(color, 91);
 
 resetColor:
 SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+
+_getch();
+push_back();
+pop_back();
+
+variableName.substr()=="i don't know"

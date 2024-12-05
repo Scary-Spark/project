@@ -200,16 +200,36 @@ void createUser()
     {
         commonStart();
         cout << "Enter user name(must be unique): ";
-        cin >> userName;
-        cin.ignore();
+        while (true)
+        {
+            char ch;
+            ch = _getch();
+            if (ch == 13)
+                break;
+            else if (ch == 8)
+            {
+                if (userName.length() > 0)
+                {
+                    userName.pop_back();
+                    cout << "\b \b";
+                }
+            }
+            else if ((97 <= ch && ch <= 122) || (ch == 95) || (48 <= ch && ch <= 57))
+            {
+                userName.push_back(ch);
+                cout << ch;
+            }
+        }
         if (checkUserName(userName))
         {
+            cout << endl;
             cout << "user name already exists! press enter to try new one.....";
             cin.get();
             system("cls");
         }
         else
         {
+            cout << endl;
             SetConsoleTextAttribute(color, 91);
             cout << "Saving info...";
             for (int i = 0; i < 5; i++)
@@ -226,17 +246,43 @@ void createUser()
     while (true)
     {
         commonStart();
-        cout << "Enter mobile number (must be unique): ";
-        cin >> mobileNumber;
-        cin.ignore();
+        cout << "Enter mobile number (must be unique): +880 ";
+        while (true)
+        {
+            char ch;
+            ch = _getch();
+            if (mobileNumber.length() == 10 && ch == 13)
+            {
+                break;
+            }
+            else if (ch == 8)
+            {
+                if (mobileNumber.length() > 0)
+                {
+                    mobileNumber.pop_back();
+                    cout << "\b \b";
+                }
+            }
+            else if (48 <= ch && ch <= 57)
+            {
+                if (mobileNumber.length() < 10)
+                {
+                    mobileNumber.push_back(ch);
+                    cout << ch;
+                }
+            }
+        }
+
         if (checkUserMobileNumber(mobileNumber))
         {
-            cout << "Mobile number already exists! press enter to try new one.....";
+            cout << endl;
+            cout << "Mobile number already exists! Press enter to try new one.....";
             cin.get();
             system("cls");
         }
         else
         {
+            cout << endl;
             SetConsoleTextAttribute(color, 91);
             cout << "Saving info...";
             for (int i = 0; i < 5; i++)
@@ -256,23 +302,36 @@ void createUser()
         cout << "Enter your email (must be unique): ";
         cin >> email;
         cin.ignore();
-        if (checkUserEmail(email))
+        if (email.length() >= 0 &&
+            (email.substr(email.length() - 10) == "@gmail.com" ||
+             email.substr(email.length() - 9) == "@yahoo.com" ||
+             email.substr(email.length() - 11) == "@hotmail.com" ||
+             email.substr(email.length() - 12) == "@diu.edu.bd"))
         {
-            cout << "Email already exists! press enter to try new one.....";
-            cin.get();
-            system("cls");
+            if (checkUserEmail(email))
+            {
+                cout << "Email already exists! press enter to try new one.....";
+                cin.get();
+                system("cls");
+            }
+            else
+            {
+                SetConsoleTextAttribute(color, 91);
+                cout << "Saving info...";
+                for (int i = 0; i < 5; i++)
+                {
+                    cout << ".";
+                    Sleep(200);
+                }
+                SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+                break;
+            }
         }
         else
         {
-            SetConsoleTextAttribute(color, 91);
-            cout << "Saving info...";
-            for (int i = 0; i < 5; i++)
-            {
-                cout << ".";
-                Sleep(200);
-            }
-            SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
-            break;
+            cout << "Invalid email address!! Press enter to try new one......";
+            cin.get();
+            system("cls");
         }
     }
     system("cls");
@@ -321,9 +380,9 @@ void createUser()
     {
         char ch;
         ch = _getch();
-        if (ch == 13)
+        if (ch == 13) // enter
             break;
-        else if (ch == 8)
+        else if (ch == 8) // backspace
         {
             if (password.length() > 0)
             {
@@ -355,7 +414,7 @@ void createUser()
     cout << "Your information: \n";
     cout << "Full Name       : " << fullName << endl;
     cout << "User Name       : " << userName << endl;
-    cout << "Cell phone      : " << mobileNumber << endl;
+    cout << "Cell phone      : +880 " << mobileNumber << endl;
     cout << "Email           : " << email << endl;
     cout << "Region          : " << region << endl;
     cout << "Password        : " << password << endl;
