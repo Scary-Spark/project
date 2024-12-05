@@ -56,6 +56,8 @@ bool checkUserName(string userName);
 bool checkUserMobileNumber(string mobileNumber);
 bool checkUserEmail(string email);
 int regionSelector();
+void adminPage();
+void adminUserList();
 int main()
 {
     opeaningInterFace();
@@ -154,7 +156,8 @@ void adminLogin()
     admin adminAccount;
     if (adminAccount.checkForAdmin(userName, password))
     {
-        cout << "Check is successful\n";
+        system("cls");
+        adminPage();
     }
     else
     {
@@ -300,13 +303,33 @@ void createUser()
     {
         commonStart();
         cout << "Enter your email (must be unique): ";
-        cin >> email;
-        cin.ignore();
-        if (email.length() >= 0 &&
+        email = "";
+        while (true)
+        {
+            char ch;
+            ch = _getch();
+            if (ch == 13)
+                break;
+            else if (ch == 8)
+            {
+                if (email.length() > 0)
+                {
+                    email.pop_back();
+                    cout << "\b \b";
+                }
+            }
+            else if (ch != ' ')
+            {
+                email.push_back(ch);
+                cout << ch;
+            }
+        }
+        cout << endl;
+        if (email.length() >= 10 &&
             (email.substr(email.length() - 10) == "@gmail.com" ||
              email.substr(email.length() - 9) == "@yahoo.com" ||
              email.substr(email.length() - 11) == "@hotmail.com" ||
-             email.substr(email.length() - 12) == "@diu.edu.bd"))
+             email.substr(email.length() - 11) == "@diu.edu.bd"))
         {
             if (checkUserEmail(email))
             {
@@ -585,4 +608,34 @@ int regionSelector()
     }
 
     return -1;
+}
+void adminPage()
+{
+    string choice;
+    cout << "===========================================\n";
+    cout << "||            MiHoYo Daily Goods         ||\n";
+    cout << "||           Buy Online Save Time        ||\n";
+    cout << "===========================================\n";
+    cout << "||             1. User list              ||\n";
+    cout << "||             2. Shop catageory         ||\n";
+    cout << "||             3. View Orders            ||\n";
+    cout << "||             4. Back to login page     ||\n";
+    cout << "===========================================\n";
+    cout << "              Enter your choice: ";
+    cin >> choice;
+    if (choice == "1")
+    {
+        adminUserList();
+    }
+}
+void adminUserList()
+{
+    cout << "===========================================\n";
+    cout << "||            MiHoYo Daily Goods         ||\n";
+    cout << "||           Buy Online Save Time        ||\n";
+    cout << "===========================================\n";
+    cout << "||1. Display users    ||";
+    cout << "||2. Sort users (A-Z) and display";
+    cout << "||3. Delete user";
+    cout << "||4. Edit user";
 }
