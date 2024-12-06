@@ -63,6 +63,9 @@ int regionSelector();
 void adminPage();
 void adminUserList();
 void adminDisplayUser();
+int adminUserButton(newUser *&temp, int count);
+void adminEditUser(newUser *&temp);
+void displayUser1(newUser *&temp, int count);
 int main()
 {
     opeaningInterFace();
@@ -359,8 +362,8 @@ void createUser()
         cout << endl;
         if (email.length() >= 10 &&
             (email.substr(email.length() - 10) == "@gmail.com" ||
-             email.substr(email.length() - 9) == "@yahoo.com" ||
-             email.substr(email.length() - 11) == "@hotmail.com" ||
+             email.substr(email.length() - 10) == "@yahoo.com" ||
+             email.substr(email.length() - 12) == "@hotmail.com" ||
              email.substr(email.length() - 11) == "@diu.edu.bd"))
         {
             if (checkUserEmail(email))
@@ -717,20 +720,20 @@ void adminDisplayUser()
     }
     else
     {
-        while (temp != NULL)
-        {
-            cout << "====================================================\n";
-            cout << "Full Name       : " << temp->fullName << endl;
-            cout << "User Name       : " << temp->userName << endl;
-            cout << "Cell phone      : +880 " << temp->mobileNumber << endl;
-            cout << "Email           : " << temp->email << endl;
-            cout << "Region          : " << temp->region << endl;
-            cout << "Password        : " << temp->password << endl;
-            cout << "====================================================\n";
-            cout << endl
-                 << endl;
+        int count = 1;
 
-            temp = temp->nextUser;
+        if (temp->previousUser == NULL && temp->nextUser == NULL)
+        {
+            displayUser1(temp, count);
+        }
+        else if (temp->previousUser == NULL)
+        {
+        }
+        else if (temp->nextUser == NULL)
+        {
+        }
+        else
+        {
         }
     }
 
@@ -762,5 +765,599 @@ void adminDisplayUser()
         SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
         system("cls");
         adminUserList();
+    }
+}
+int adminUserButton(newUser *&temp, int count)
+{
+    if (temp->previousUser == NULL && temp->nextUser == NULL)
+    {
+        int choosen = 0;
+        string buttons[] = {"delete", "edit", "exit"};
+        int total = 3;
+        while (true)
+        {
+            system("cls");
+            cout << "====================================================\n";
+            cout << "                   User " << count << ": " << endl;
+            cout << "====================================================\n";
+            cout << " Full Name       : " << temp->fullName << endl;
+            cout << " User Name       : " << temp->userName << endl;
+            cout << " Cell phone      : +880 " << temp->mobileNumber << endl;
+            cout << " Email           : " << temp->email << endl;
+            cout << " Region          : " << temp->region << endl;
+            cout << " Password        : " << temp->password << endl;
+            cout << " Total purchesed : " << temp->totalPurchasedAmount << " $" << endl;
+            cout << "====================================================\n\n";
+            cout << "               ";
+            for (int i = 0; i < total; i++)
+            {
+                if (i == choosen)
+                {
+                    SetConsoleTextAttribute(color, 10);
+                    cout << "  > " << buttons[i] << " <     ";
+                    SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+                }
+                else
+                    cout << " " << buttons[i] << "     ";
+            }
+            cout << "               ";
+            char ch;
+            ch = _getch();
+            if (ch == 27)
+            {
+                break;
+            }
+            else if (ch == 13)
+            {
+                return choosen;
+            }
+            else if (ch == 'a' || ch == 'A')
+            {
+                if (choosen > 0)
+                    choosen--;
+            }
+            else if (ch == 'd' || ch == 'D')
+            {
+                if (choosen < total - 1)
+                    choosen++;
+            }
+        }
+        return -1;
+    }
+    else if (temp->previousUser == NULL)
+    {
+        int choosen = 0;
+        string buttons[] = {"delete", "edit", "next", "exit"};
+        int total = 4;
+        while (true)
+        {
+            system("cls");
+            cout << "====================================================\n";
+            cout << "               User " << count << ": " << endl;
+            cout << "====================================================\n";
+            cout << " Full Name       : " << temp->fullName << endl;
+            cout << " User Name       : " << temp->userName << endl;
+            cout << " Cell phone      : +880 " << temp->mobileNumber << endl;
+            cout << " Email           : " << temp->email << endl;
+            cout << " Region          : " << temp->region << endl;
+            cout << " Password        : " << temp->password << endl;
+            cout << " Total purchesed : " << temp->totalPurchasedAmount << " $" << endl;
+            cout << "====================================================\n\n";
+            cout << "               ";
+            for (int i = 0; i < total; i++)
+            {
+                if (i == choosen)
+                {
+                    SetConsoleTextAttribute(color, 10);
+                    cout << "  > " << buttons[i] << " <     ";
+                    SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+                }
+                else
+                    cout << " " << buttons[i] << "     ";
+            }
+            char ch;
+            ch = _getch();
+            if (ch == 27)
+            {
+                break;
+            }
+            else if (ch == 13)
+            {
+                return choosen;
+            }
+            else if (ch == 'a' || ch == 'A')
+            {
+                if (choosen > 0)
+                    choosen--;
+            }
+            else if (ch == 'd' || ch == 'D')
+            {
+                if (choosen < total - 1)
+                    choosen++;
+            }
+        }
+        return -1;
+    }
+    else if (temp->nextUser == NULL)
+    {
+        int choosen = 0;
+        string buttons[] = {"previous", "delete", "edit", "exit"};
+        int total = 4;
+        while (true)
+        {
+            system("cls");
+            cout << "====================================================\n";
+            cout << "               User " << count << ": " << endl;
+            cout << "====================================================\n";
+            cout << " Full Name       : " << temp->fullName << endl;
+            cout << " User Name       : " << temp->userName << endl;
+            cout << " Cell phone      : +880 " << temp->mobileNumber << endl;
+            cout << " Email           : " << temp->email << endl;
+            cout << " Region          : " << temp->region << endl;
+            cout << " Password        : " << temp->password << endl;
+            cout << " Total purchesed : " << temp->totalPurchasedAmount << " $" << endl;
+            cout << "====================================================\n\n";
+            cout << " ";
+            for (int i = 0; i < total; i++)
+            {
+                if (i == choosen)
+                {
+                    SetConsoleTextAttribute(color, 10);
+                    cout << "  > " << buttons[i] << " <     ";
+                    SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+                }
+                else
+                    cout << " " << buttons[i] << "     ";
+            }
+            cout << "               ";
+            char ch;
+            ch = _getch();
+            if (ch == 27)
+            {
+                break;
+            }
+            else if (ch == 13)
+            {
+                return choosen;
+            }
+            else if (ch == 'a' || ch == 'A')
+            {
+                if (choosen > 0)
+                    choosen--;
+            }
+            else if (ch == 'd' || ch == 'D')
+            {
+                if (choosen < total - 1)
+                    choosen++;
+            }
+        }
+        return -1;
+    }
+    else
+    {
+        int choosen = 0;
+        string buttons[] = {"previous", "delete", "edit", "next", "exit"};
+        int total = 5;
+        while (true)
+        {
+            system("cls");
+            cout << "====================================================\n";
+            cout << "               User " << count << ": " << endl;
+            cout << "====================================================\n";
+            cout << " Full Name       : " << temp->fullName << endl;
+            cout << " User Name       : " << temp->userName << endl;
+            cout << " Cell phone      : +880 " << temp->mobileNumber << endl;
+            cout << " Email           : " << temp->email << endl;
+            cout << " Region          : " << temp->region << endl;
+            cout << " Password        : " << temp->password << endl;
+            cout << " Total purchesed : " << temp->totalPurchasedAmount << " $" << endl;
+            cout << "====================================================\n\n";
+            for (int i = 0; i < total; i++)
+            {
+                if (i == choosen)
+                {
+                    SetConsoleTextAttribute(color, 10);
+                    cout << "  > " << buttons[i] << " <     ";
+                    SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+                }
+                else
+                    cout << " " << buttons[i] << "     ";
+            }
+            char ch;
+            ch = _getch();
+            if (ch == 27)
+            {
+                break;
+            }
+            else if (ch == 13)
+            {
+                return choosen;
+            }
+            else if (ch == 'a' || ch == 'A')
+            {
+                if (choosen > 0)
+                    choosen--;
+            }
+            else if (ch == 'd' || ch == 'D')
+            {
+                if (choosen < total - 1)
+                    choosen++;
+            }
+        }
+        return -1;
+    }
+}
+void adminEditUser(newUser *&temp)
+{
+    string fullName = temp->fullName,
+           userName = temp->userName,
+           cellPhone = temp->mobileNumber,
+           email = temp->email,
+           region = temp->region,
+           password = temp->password;
+    cout << "====================================================\n";
+    cout << "||                MiHoYo Daily Goods              ||\n";
+    cout << "||             Buy Online Save Your Time          ||\n";
+    cout << "====================================================\n";
+    cout << "  Full Name: " << fullName;
+    while (true)
+    {
+        char ch;
+        ch = _getch();
+        if (ch == 13)
+            break;
+        else if (ch == 8)
+        {
+            if (fullName.length() > 0)
+            {
+                fullName.pop_back();
+                cout << "\b \b";
+            }
+        }
+        else
+        {
+            fullName.push_back(ch);
+            cout << ch;
+        }
+    }
+    cout << endl;
+    SetConsoleTextAttribute(color, 91);
+    cout << "Saving info...";
+    for (int i = 0; i < 5; i++)
+    {
+        cout << ".";
+        Sleep(200);
+    }
+    SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+    cout << endl;
+    system("cls");
+
+    while (true)
+    {
+        cout << "====================================================\n";
+        cout << "||                MiHoYo Daily Goods              ||\n";
+        cout << "||             Buy Online Save Your Time          ||\n";
+        cout << "====================================================\n";
+        userName = temp->userName;
+        cout << " User Name: " << userName;
+        while (true)
+        {
+            char ch;
+            ch = _getch();
+            if (ch == 13)
+                break;
+            else if (ch == 8)
+            {
+                if (userName.length() > 0)
+                {
+                    userName.pop_back();
+                    cout << "\b \b";
+                }
+            }
+            else if ((97 <= ch && ch <= 122) || (ch == 95) || (48 <= ch && ch <= 57))
+            {
+                userName.push_back(ch);
+                cout << ch;
+            }
+        }
+        if (checkUserName(userName) && userName != temp->userName)
+        {
+            cout << endl;
+            cout << "user name already exists! press enter to try new one.....";
+            cin.get();
+            system("cls");
+        }
+        else
+        {
+            cout << endl;
+            SetConsoleTextAttribute(color, 91);
+            cout << "Saving info...";
+            for (int i = 0; i < 5; i++)
+            {
+                cout << ".";
+                Sleep(200);
+            }
+            SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+            break;
+        }
+    }
+    system("cls");
+
+    while (true)
+    {
+        cout << "====================================================\n";
+        cout << "||                MiHoYo Daily Goods              ||\n";
+        cout << "||             Buy Online Save Your Time          ||\n";
+        cout << "====================================================\n";
+        cellPhone = temp->mobileNumber;
+        cout << "  Cell phone: +880 " << cellPhone;
+        while (true)
+        {
+            char ch;
+            ch = _getch();
+            if (cellPhone.length() == 10 && ch == 13)
+            {
+                break;
+            }
+            else if (ch == 8)
+            {
+                if (cellPhone.length() > 0)
+                {
+                    cellPhone.pop_back();
+                    cout << "\b \b";
+                }
+            }
+            else if (48 <= ch && ch <= 57)
+            {
+                if (cellPhone.length() < 10)
+                {
+                    cellPhone.push_back(ch);
+                    cout << ch;
+                }
+            }
+        }
+
+        if (checkUserMobileNumber(cellPhone) && cellPhone != temp->mobileNumber)
+        {
+            cout << endl;
+            cout << "Mobile number already exists! Press enter to try new one.....";
+            cin.get();
+            system("cls");
+        }
+        else
+        {
+            cout << endl;
+            SetConsoleTextAttribute(color, 91);
+            cout << "Saving info...";
+            for (int i = 0; i < 5; i++)
+            {
+                cout << ".";
+                Sleep(200);
+            }
+            SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+            break;
+        }
+    }
+    system("cls");
+
+    while (true)
+    {
+        email = temp->email;
+        cout << "====================================================\n";
+        cout << "||                MiHoYo Daily Goods              ||\n";
+        cout << "||             Buy Online Save Your Time          ||\n";
+        cout << "====================================================\n";
+        cout << "  Email: " << email;
+        while (true)
+        {
+            char ch;
+            ch = _getch();
+            if (ch == 13)
+                break;
+            else if (ch == 8)
+            {
+                if (email.length() > 0)
+                {
+                    email.pop_back();
+                    cout << "\b \b";
+                }
+            }
+            else if (ch != ' ')
+            {
+                email.push_back(ch);
+                cout << ch;
+            }
+        }
+        cout << endl;
+        if (email.length() >= 10 &&
+            (email.substr(email.length() - 10) == "@gmail.com" ||
+             email.substr(email.length() - 10) == "@yahoo.com" ||
+             email.substr(email.length() - 12) == "@hotmail.com" ||
+             email.substr(email.length() - 11) == "@diu.edu.bd"))
+        {
+            if (checkUserEmail(email) && email != temp->email)
+            {
+                cout << "Email already exists! press enter to try new one.....";
+                cin.get();
+                system("cls");
+            }
+            else
+            {
+                SetConsoleTextAttribute(color, 91);
+                cout << "Saving info...";
+                for (int i = 0; i < 5; i++)
+                {
+                    cout << ".";
+                    Sleep(200);
+                }
+                SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+                break;
+            }
+        }
+        else
+        {
+            cout << "Invalid email address!! Press enter to try new one......";
+            cin.get();
+            system("cls");
+        }
+    }
+    system("cls");
+
+    int regionSelect = regionSelector();
+    switch (regionSelect)
+    {
+    case 0:
+        region = "Fontaine";
+        break;
+    case 1:
+        region = "Mondstadt";
+        break;
+    case 2:
+        region = "Liyue";
+        break;
+    case 3:
+        region = "Sumeru";
+        break;
+    case 4:
+        region = "Snezhnaya";
+        break;
+    case 5:
+        region = "Inazuma";
+        break;
+    case 6:
+        region = "Natlan";
+        break;
+    default:
+        region = "Invalid";
+    }
+    SetConsoleTextAttribute(color, 91);
+    cout << "Saving info...";
+    for (int i = 0; i < 5; i++)
+    {
+        cout << ".";
+        Sleep(200);
+    }
+    SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+    system("cls");
+
+    cout << "  Password: " << password;
+    while (true)
+    {
+        char ch;
+        ch = _getch();
+        if (ch == 13)
+            break;
+        else if (ch == 8)
+        {
+            if (password.length() > 0)
+            {
+                password.pop_back();
+                cout << "\b \b";
+            }
+        }
+        else if (ch != ' ')
+        {
+            password.push_back(ch);
+            cout << ch;
+        }
+    }
+    cout << endl;
+    system("cls");
+    cout << "====================================================\n";
+    cout << "||                  Updated User                  ||" << endl;
+    cout << "====================================================\n";
+    cout << " Full Name       : " << fullName << endl;
+    cout << " User Name       : " << userName << endl;
+    cout << " Cell phone      : +880 " << cellPhone << endl;
+    cout << " Email           : " << email << endl;
+    cout << " Region          : " << region << endl;
+    cout << " Password        : " << password << endl;
+    cout << "====================================================\n\n";
+    cout << "Type 'cancel' to cancel the changes. Or press enter to confirm.....";
+    string input;
+    getline(cin, input);
+    if (input == "cancel")
+    {
+        cout << "Cancelling....";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+            Sleep(200);
+        }
+        cout << endl;
+        return;
+    }
+    else
+    {
+        cout << "Updating user....";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+            Sleep(200);
+        }
+        cout << endl;
+        temp->fullName = fullName;
+        temp->userName = userName;
+        temp->mobileNumber = cellPhone;
+        temp->email = email;
+        temp->region = region;
+        temp->password = password;
+        cout << "User has been updated.." << endl;
+        cout << "Press enter to continue....";
+        cin.get();
+        cout << "Loading....";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+            Sleep(200);
+        }
+        system("cls");
+        return;
+    }
+}
+void displayUser1(newUser *&temp, int count) // w3hen just 1 user (pre==NULL && next==NULL)
+{
+
+    int buttonSelected = adminUserButton(temp, count);
+    switch (buttonSelected)
+    {
+    case 1:
+        system("cls");
+        adminEditUser(temp);
+        displayUser1(temp, count);
+        break;
+    case 2:
+        cout << endl;
+        cout << "Loading....";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+            Sleep(200);
+        }
+        cout << ".";
+        adminUserList();
+        break;
+    case 0:
+        string confirmation;
+        cout << endl;
+        cout << "are you sure want to delete this accout? (y/N) ";
+        getline(cin, confirmation);
+        if (confirmation == "y" || confirmation == "Y")
+        {
+            cout << "Deleting account....";
+            for (int i = 0; i < 5; i++)
+            {
+                cout << ".";
+                Sleep(200);
+            }
+            cout << endl;
+            if (head->nextUser == NULL)
+            {
+                delete head;
+                head = NULL;
+            }
+            cout << "User has beed successfully deleted\n";
+        }
+        break;
     }
 }
