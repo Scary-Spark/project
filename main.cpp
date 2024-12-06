@@ -66,25 +66,33 @@ void adminDisplayUser();
 int adminUserButton(newUser *&temp, int count);
 void adminEditUser(newUser *&temp);
 void displayUser1(newUser *&temp, int count);
+void displayUser2(newUser *&temp, int count);
+void displayUser3(newUser *temp, int count);
+void displayUser4(newUser *temp, int count);
+void adminDisplayUser2(newUser *temp);
+
 int main()
 {
     opeaningInterFace();
 }
 void commonStart()
 {
-    cout << "===========================================\n";
-    cout << "||            MiHoYo Daily Goods         ||\n";
-    cout << "||           Buy Online Save Time        ||\n";
-    cout << "===========================================\n";
+    cout << "===================================================\n";
+    cout << "||                MiHoYo Daily Goods             ||\n";
+    cout << "||            Buy Online Save Your Time          ||\n";
+    cout << "===================================================\n";
 }
 void opeaningInterFace()
 {
     string choice;
-    commonStart();
-    cout << "||           1. Admin login              ||\n";
-    cout << "||           2. User login               ||\n";
-    cout << "||           3. Create a user account    ||\n";
-    cout << "===========================================\n";
+    cout << "===================================================\n";
+    cout << "||                MiHoYo Daily Goods             ||\n";
+    cout << "||            Buy Online Save Your Time          ||\n";
+    cout << "===================================================\n";
+    cout << "||              1. Admin login                   ||\n";
+    cout << "||              2. User login                    ||\n";
+    cout << "||              3. Create a user account         ||\n";
+    cout << "===================================================\n";
     cout << "       Enter your choice: ";
     cin >> choice;
     if (choice == "1")
@@ -125,15 +133,20 @@ void opeaningInterFace()
         system("cls");
         createUser();
     }
+    else
+    {
+        system("cls");
+        opeaningInterFace();
+    }
 }
 void adminLogin()
 {
     string userName;
     string password;
-    cout << "===========================================\n";
-    cout << "||            MiHoYo Daily Goods         ||\n";
-    cout << "||           Buy Online Save Time        ||\n";
-    cout << "===========================================\n";
+    cout << "===================================================\n";
+    cout << "||                MiHoYo Daily Goods             ||\n";
+    cout << "||            Buy Online Save Your Time          ||\n";
+    cout << "===================================================\n";
     cout << "Enter user Name: ";
     cin >> userName;
     cout << "Enter password: ";
@@ -194,8 +207,8 @@ void adminLogin()
                 cout << ".";
                 Sleep(200);
             }
-            system("cls");
             SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+            system("cls");
             opeaningInterFace();
         }
         else
@@ -207,6 +220,7 @@ void adminLogin()
                 cout << ".";
                 Sleep(200);
             }
+            SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
             system("cls");
             SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
             adminLogin();
@@ -650,15 +664,15 @@ int regionSelector()
 void adminPage()
 {
     string choice;
-    cout << "===========================================\n";
-    cout << "||            MiHoYo Daily Goods         ||\n";
-    cout << "||           Buy Online Save Time        ||\n";
-    cout << "===========================================\n";
-    cout << "||          1. User list                 ||\n";
-    cout << "||          2. Shop catageory            ||\n";
-    cout << "||          3. View orders               ||\n";
-    cout << "||          4. Back to login page        ||\n";
-    cout << "===========================================\n";
+    cout << "===================================================\n";
+    cout << "||                MiHoYo Daily Goods             ||\n";
+    cout << "||            Buy Online Save Your Time          ||\n";
+    cout << "===================================================\n";
+    cout << "||               1. User list                    ||\n";
+    cout << "||               2. Shop catageory               ||\n";
+    cout << "||               3. View orders                  ||\n";
+    cout << "||               4. Back to login page           ||\n";
+    cout << "===================================================\n";
     cout << "            Enter your choice: ";
     cin >> choice;
     if (choice == "1")
@@ -685,13 +699,14 @@ void adminUserList()
     system("cls");
     string choice;
     cout << "===================================================\n";
-    cout << "||               MiHoYo Daily Goods              ||\n";
-    cout << "||               Buy Online Save Time            ||\n";
+    cout << "||                MiHoYo Daily Goods             ||\n";
+    cout << "||            Buy Online Save Your Time          ||\n";
     cout << "===================================================\n";
     cout << "||              1. Display users                 ||\n";
     cout << "||              2. Sort users (A-Z) and display  ||\n";
     cout << "||              3. Delete user                   ||\n";
     cout << "||              4. Edit user                     ||\n";
+    cout << "||              5. Back to login page            ||\n";
     cout << "===================================================\n";
     cout << "              Enter your choice: ";
     cin >> choice;
@@ -708,6 +723,41 @@ void adminUserList()
         system("cls");
         adminDisplayUser();
     }
+    else if (choice == "5")
+    {
+        cout << endl;
+        cout << "Loading.....";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+            Sleep(200);
+        }
+        cout << endl;
+        system("cls");
+        opeaningInterFace();
+    }
+}
+void adminDisplayUser2(newUser *temp)
+{
+    int count = 1;
+
+    if (temp->previousUser == NULL && temp->nextUser == NULL)
+    {
+        displayUser1(temp, count);
+    }
+    else if (temp->previousUser == NULL)
+    {
+        count++;
+        displayUser2(temp, count);
+    }
+    else if (temp->nextUser == NULL)
+    {
+        displayUser3(temp, count);
+    }
+    else
+    {
+        displayUser4(temp, count);
+    }
 }
 void adminDisplayUser()
 {
@@ -720,21 +770,7 @@ void adminDisplayUser()
     }
     else
     {
-        int count = 1;
-
-        if (temp->previousUser == NULL && temp->nextUser == NULL)
-        {
-            displayUser1(temp, count);
-        }
-        else if (temp->previousUser == NULL)
-        {
-        }
-        else if (temp->nextUser == NULL)
-        {
-        }
-        else
-        {
-        }
+        adminDisplayUser2(temp);
     }
 
     string input;
@@ -777,9 +813,10 @@ int adminUserButton(newUser *&temp, int count)
         while (true)
         {
             system("cls");
-            cout << "====================================================\n";
-            cout << "                   User " << count << ": " << endl;
-            cout << "====================================================\n";
+            cout << "===================================================\n";
+            cout << "||                MiHoYo Daily Goods             ||\n";
+            cout << "||            Buy Online Save Your Time          ||\n";
+            cout << "===================================================\n";
             cout << " Full Name       : " << temp->fullName << endl;
             cout << " User Name       : " << temp->userName << endl;
             cout << " Cell phone      : +880 " << temp->mobileNumber << endl;
@@ -832,9 +869,10 @@ int adminUserButton(newUser *&temp, int count)
         while (true)
         {
             system("cls");
-            cout << "====================================================\n";
-            cout << "               User " << count << ": " << endl;
-            cout << "====================================================\n";
+            cout << "===================================================\n";
+            cout << "||                MiHoYo Daily Goods             ||\n";
+            cout << "||            Buy Online Save Your Time          ||\n";
+            cout << "===================================================\n";
             cout << " Full Name       : " << temp->fullName << endl;
             cout << " User Name       : " << temp->userName << endl;
             cout << " Cell phone      : +880 " << temp->mobileNumber << endl;
@@ -886,9 +924,10 @@ int adminUserButton(newUser *&temp, int count)
         while (true)
         {
             system("cls");
-            cout << "====================================================\n";
-            cout << "               User " << count << ": " << endl;
-            cout << "====================================================\n";
+            cout << "===================================================\n";
+            cout << "||                MiHoYo Daily Goods             ||\n";
+            cout << "||            Buy Online Save Your Time          ||\n";
+            cout << "===================================================\n";
             cout << " Full Name       : " << temp->fullName << endl;
             cout << " User Name       : " << temp->userName << endl;
             cout << " Cell phone      : +880 " << temp->mobileNumber << endl;
@@ -941,9 +980,10 @@ int adminUserButton(newUser *&temp, int count)
         while (true)
         {
             system("cls");
-            cout << "====================================================\n";
-            cout << "               User " << count << ": " << endl;
-            cout << "====================================================\n";
+            cout << "===================================================\n";
+            cout << "||                MiHoYo Daily Goods             ||\n";
+            cout << "||            Buy Online Save Your Time          ||\n";
+            cout << "===================================================\n";
             cout << " Full Name       : " << temp->fullName << endl;
             cout << " User Name       : " << temp->userName << endl;
             cout << " Cell phone      : +880 " << temp->mobileNumber << endl;
@@ -995,10 +1035,10 @@ void adminEditUser(newUser *&temp)
            email = temp->email,
            region = temp->region,
            password = temp->password;
-    cout << "====================================================\n";
-    cout << "||                MiHoYo Daily Goods              ||\n";
-    cout << "||             Buy Online Save Your Time          ||\n";
-    cout << "====================================================\n";
+    cout << "===================================================\n";
+    cout << "||                MiHoYo Daily Goods             ||\n";
+    cout << "||            Buy Online Save Your Time          ||\n";
+    cout << "===================================================\n";
     cout << "  Full Name: " << fullName;
     while (true)
     {
@@ -1034,10 +1074,10 @@ void adminEditUser(newUser *&temp)
 
     while (true)
     {
-        cout << "====================================================\n";
-        cout << "||                MiHoYo Daily Goods              ||\n";
-        cout << "||             Buy Online Save Your Time          ||\n";
-        cout << "====================================================\n";
+        cout << "===================================================\n";
+        cout << "||                MiHoYo Daily Goods             ||\n";
+        cout << "||            Buy Online Save Your Time          ||\n";
+        cout << "===================================================\n";
         userName = temp->userName;
         cout << " User Name: " << userName;
         while (true)
@@ -1085,10 +1125,10 @@ void adminEditUser(newUser *&temp)
 
     while (true)
     {
-        cout << "====================================================\n";
-        cout << "||                MiHoYo Daily Goods              ||\n";
-        cout << "||             Buy Online Save Your Time          ||\n";
-        cout << "====================================================\n";
+        cout << "===================================================\n";
+        cout << "||                MiHoYo Daily Goods             ||\n";
+        cout << "||            Buy Online Save Your Time          ||\n";
+        cout << "===================================================\n";
         cellPhone = temp->mobileNumber;
         cout << "  Cell phone: +880 " << cellPhone;
         while (true)
@@ -1143,10 +1183,10 @@ void adminEditUser(newUser *&temp)
     while (true)
     {
         email = temp->email;
-        cout << "====================================================\n";
-        cout << "||                MiHoYo Daily Goods              ||\n";
-        cout << "||             Buy Online Save Your Time          ||\n";
-        cout << "====================================================\n";
+        cout << "===================================================\n";
+        cout << "||                MiHoYo Daily Goods             ||\n";
+        cout << "||            Buy Online Save Your Time          ||\n";
+        cout << "===================================================\n";
         cout << "  Email: " << email;
         while (true)
         {
@@ -1322,6 +1362,12 @@ void displayUser1(newUser *&temp, int count) // w3hen just 1 user (pre==NULL && 
     switch (buttonSelected)
     {
     case 1:
+        cout << endl;
+        cout << "Loading.....";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+        }
         system("cls");
         adminEditUser(temp);
         displayUser1(temp, count);
@@ -1356,8 +1402,209 @@ void displayUser1(newUser *&temp, int count) // w3hen just 1 user (pre==NULL && 
                 delete head;
                 head = NULL;
             }
-            cout << "User has beed successfully deleted\n";
+            cout << "User has been successfully deleted\n";
         }
+        break;
+    }
+}
+
+void displayUser2(newUser *&temp, int count) // previousUser==NULL
+{
+    int buttonSelected = adminUserButton(temp, count);
+    string confirmation;
+    switch (buttonSelected)
+    {
+    case 0:
+        cout << endl;
+        cout << "are you sure want to delete this accout? (y/N) ";
+        getline(cin, confirmation);
+        if (confirmation == "y" || confirmation == "Y")
+        {
+            cout << "Deleting account....";
+            for (int i = 0; i < 5; i++)
+            {
+                cout << ".";
+                Sleep(200);
+            }
+            cout << endl;
+            head = head->nextUser;
+            head->previousUser = NULL;
+            delete temp;
+            cout << "User has been successfully deleted\n";
+
+            cout << "Press enter to continue.....";
+            string input;
+            cin.get();
+            temp = head;
+        }
+        break;
+    case 1:
+        cout << endl;
+        cout << "Loading.....";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+        }
+        system("cls");
+        adminEditUser(temp);
+        break;
+    case 2:
+        cout << endl;
+        cout << "Loading.....";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+        }
+        temp = temp->nextUser;
+        system("cls");
+        adminDisplayUser2(temp);
+        break;
+    case 3:
+        cout << endl;
+        cout << "Loading....";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+            Sleep(200);
+        }
+        cout << ".";
+        adminUserList();
+        break;
+    }
+}
+void displayUser3(newUser *temp, int count) // nextUser==NULL
+{
+    int buttonSelected = adminUserButton(temp, count);
+    string confirmation;
+    switch (buttonSelected)
+    {
+    case 0:
+        temp = temp->previousUser;
+        system("cls");
+        adminDisplayUser2(temp);
+        break;
+    case 1:
+        cout << endl;
+        cout << "are you sure want to delete this accout? (y/N) ";
+        getline(cin, confirmation);
+        if (confirmation == "y" || confirmation == "Y")
+        {
+            cout << "Deleting account....";
+            for (int i = 0; i < 5; i++)
+            {
+                cout << ".";
+                Sleep(200);
+            }
+            cout << endl;
+            newUser *previous;
+            previous = temp->previousUser;
+            previous->nextUser = NULL;
+            temp->previousUser = NULL;
+            delete temp;
+
+            cout << "User has been successfully deleted\n";
+            cout << "Press enter to continue.....";
+            string input;
+            cin.get();
+        }
+        break;
+
+    case 2:
+        cout << endl;
+        cout << "Loading.....";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+        }
+        system("cls");
+        adminEditUser(temp);
+        break;
+
+    case 3:
+        cout << endl;
+        cout << "Loading....";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+            Sleep(200);
+        }
+        cout << ".";
+        adminUserList();
+        break;
+    }
+}
+void displayUser4(newUser *temp, int count)
+{
+    int buttonSelected = adminUserButton(temp, count);
+    string confirmation;
+    switch (buttonSelected)
+    {
+    case 0:
+        temp = temp->previousUser;
+        system("cls");
+        adminDisplayUser2(temp);
+        break;
+        break;
+    case 1:
+        cout << endl;
+        cout << "are you sure want to delete this accout? (y/N) ";
+        getline(cin, confirmation);
+        if (confirmation == "y" || confirmation == "Y")
+        {
+            cout << "Deleting account....";
+            for (int i = 0; i < 5; i++)
+            {
+                cout << ".";
+                Sleep(200);
+            }
+
+            newUser *previous = temp->previousUser;
+            newUser *next = temp->nextUser;
+
+            previous->nextUser = next;
+            temp->previousUser = NULL;
+
+            next->previousUser = previous;
+            temp->nextUser = NULL;
+
+            cout << "User has been successfully deleted\n";
+            cout << "Press enter to continue.....";
+            string input;
+            cin.get();
+        }
+        break;
+    case 2:
+        cout << endl;
+        cout << "Loading.....";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+        }
+        system("cls");
+        adminEditUser(temp);
+        break;
+    case 3:
+        cout << endl;
+        cout << "Loading.....";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+        }
+        temp = temp->nextUser;
+        system("cls");
+        adminDisplayUser2(temp);
+
+        break;
+    case 4:
+        cout << endl;
+        cout << "Loading....";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+            Sleep(200);
+        }
+        cout << ".";
+        adminUserList();
         break;
     }
 }
