@@ -28,8 +28,10 @@ public:
     string mobileNumber;
     string email;
     string region;
+    double totalPurchasedAmount;
     string password;
     newUser *nextUser;
+    newUser *previousUser;
 
     newUser(string fullName,
             string userName,
@@ -44,7 +46,9 @@ public:
         this->mobileNumber = mobileNumber;
         this->email = email;
         this->password = password;
+        this->totalPurchasedAmount = 0.0;
         this->nextUser = NULL;
+        this->previousUser = NULL;
     }
 };
 newUser *head = NULL;
@@ -58,6 +62,7 @@ bool checkUserEmail(string email);
 int regionSelector();
 void adminPage();
 void adminUserList();
+void adminDisplayUser();
 int main()
 {
     opeaningInterFace();
@@ -156,6 +161,14 @@ void adminLogin()
     admin adminAccount;
     if (adminAccount.checkForAdmin(userName, password))
     {
+        SetConsoleTextAttribute(color, 91);
+        cout << "Loading...";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+            Sleep(200);
+        }
+        SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
         system("cls");
         adminPage();
     }
@@ -171,18 +184,35 @@ void adminLogin()
         getline(cin, input);
         if (input == "exit")
         {
+            SetConsoleTextAttribute(color, 91);
+            cout << "Loading...";
+            for (int i = 0; i < 5; i++)
+            {
+                cout << ".";
+                Sleep(200);
+            }
             system("cls");
+            SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
             opeaningInterFace();
         }
         else
         {
+            SetConsoleTextAttribute(color, 91);
+            cout << "Loading...";
+            for (int i = 0; i < 5; i++)
+            {
+                cout << ".";
+                Sleep(200);
+            }
             system("cls");
+            SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
             adminLogin();
         }
     }
 }
 void createUser()
 {
+    SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
     string fullName, userName, region, mobileNumber, email, password;
 
     commonStart();
@@ -202,6 +232,7 @@ void createUser()
     while (true)
     {
         commonStart();
+        userName = "";
         cout << "Enter user name(must be unique): ";
         while (true)
         {
@@ -249,6 +280,7 @@ void createUser()
     while (true)
     {
         commonStart();
+        mobileNumber = "";
         cout << "Enter mobile number (must be unique): +880 ";
         while (true)
         {
@@ -498,7 +530,9 @@ void createUser()
                 temp = temp->nextUser;
             }
             temp->nextUser = newNode;
+            newNode->previousUser = temp;
             cout << fullName << ", your account has been successfully created\n";
+            SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
             cout << "Press enter to back to login page....";
 
             string input;
@@ -563,6 +597,7 @@ bool checkUserEmail(string email)
 
 int regionSelector()
 {
+    SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
     int choosen = 0;
     string regions[] = {"Fontaine", "Mondstadt", "Liyue", "Sumeru", "Snezhnaya", "Inazuma", "Natlan"};
     int total = 7;
@@ -587,7 +622,7 @@ int regionSelector()
         char ch;
         ch = _getch();
 
-        if (ch == 27)
+        if (ch == 27) // escape key
         {
             break;
         }
@@ -616,26 +651,116 @@ void adminPage()
     cout << "||            MiHoYo Daily Goods         ||\n";
     cout << "||           Buy Online Save Time        ||\n";
     cout << "===========================================\n";
-    cout << "||             1. User list              ||\n";
-    cout << "||             2. Shop catageory         ||\n";
-    cout << "||             3. View Orders            ||\n";
-    cout << "||             4. Back to login page     ||\n";
+    cout << "||          1. User list                 ||\n";
+    cout << "||          2. Shop catageory            ||\n";
+    cout << "||          3. View orders               ||\n";
+    cout << "||          4. Back to login page        ||\n";
     cout << "===========================================\n";
-    cout << "              Enter your choice: ";
+    cout << "            Enter your choice: ";
     cin >> choice;
     if (choice == "1")
     {
+        SetConsoleTextAttribute(color, 91);
+        cout << "Loading...";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+            Sleep(200);
+        }
+        SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+        system("cls");
         adminUserList();
+        cin.ignore();
+    }
+    else if (choice == "2")
+    {
     }
 }
 void adminUserList()
 {
-    cout << "===========================================\n";
-    cout << "||            MiHoYo Daily Goods         ||\n";
-    cout << "||           Buy Online Save Time        ||\n";
-    cout << "===========================================\n";
-    cout << "||1. Display users    ||";
-    cout << "||2. Sort users (A-Z) and display";
-    cout << "||3. Delete user";
-    cout << "||4. Edit user";
+    SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+    system("cls");
+    string choice;
+    cout << "===================================================\n";
+    cout << "||               MiHoYo Daily Goods              ||\n";
+    cout << "||               Buy Online Save Time            ||\n";
+    cout << "===================================================\n";
+    cout << "||              1. Display users                 ||\n";
+    cout << "||              2. Sort users (A-Z) and display  ||\n";
+    cout << "||              3. Delete user                   ||\n";
+    cout << "||              4. Edit user                     ||\n";
+    cout << "===================================================\n";
+    cout << "              Enter your choice: ";
+    cin >> choice;
+    cin.ignore();
+    if (choice == "1")
+    {
+        cout << "Loading...";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+            Sleep(200);
+        }
+        SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+        system("cls");
+        adminDisplayUser();
+    }
+}
+void adminDisplayUser()
+{
+    SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+    newUser *temp;
+    temp = head;
+    if (head == NULL)
+    {
+        cout << "No users found\n";
+    }
+    else
+    {
+        while (temp != NULL)
+        {
+            cout << "====================================================\n";
+            cout << "Full Name       : " << temp->fullName << endl;
+            cout << "User Name       : " << temp->userName << endl;
+            cout << "Cell phone      : +880 " << temp->mobileNumber << endl;
+            cout << "Email           : " << temp->email << endl;
+            cout << "Region          : " << temp->region << endl;
+            cout << "Password        : " << temp->password << endl;
+            cout << "====================================================\n";
+            cout << endl
+                 << endl;
+
+            temp = temp->nextUser;
+        }
+    }
+
+    string input;
+    cout << "Type 'exit' to go back to login page. Press enter to back to user list page.....";
+    getline(cin, input);
+    if (input == "exit")
+    {
+        SetConsoleTextAttribute(color, 91);
+        cout << "Loading...";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+            Sleep(200);
+        }
+        SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+        system("cls");
+        opeaningInterFace();
+    }
+    else
+    {
+        SetConsoleTextAttribute(color, 91);
+        cout << "Loading...";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+            Sleep(200);
+        }
+        SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+        system("cls");
+        adminUserList();
+    }
 }
