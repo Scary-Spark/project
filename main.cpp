@@ -70,6 +70,7 @@ void displayUser2(newUser *&temp, int count);
 void displayUser3(newUser *temp, int count);
 void displayUser4(newUser *temp, int count);
 void adminDisplayUser2(newUser *temp);
+void deleteAUser();
 
 int main()
 {
@@ -692,6 +693,321 @@ void adminPage()
     else if (choice == "2")
     {
     }
+    else if (choice == "3")
+    {
+    }
+    else if (choice == "4")
+    {
+    }
+    else
+    {
+        system("cls");
+        adminPage();
+    }
+}
+void deleteAUser()
+{
+    if (head == NULL)
+    {
+        cout << "No user exists!\n";
+        cout << "Press enter to continue.....";
+        string input;
+        cin.get();
+        cout << "Loading.....";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+        }
+        cout << endl;
+        system("cls");
+        adminUserList();
+    }
+    string userName;
+    newUser *temp = head;
+    cout << "===================================================\n";
+    cout << "||                MiHoYo Daily Goods             ||\n";
+    cout << "||            Buy Online Save Your Time          ||\n";
+    cout << "===================================================\n";
+    cout << "  Enter username: ";
+
+    while (true)
+    {
+        char ch;
+        ch = _getch();
+        if (ch == 13 && userName.length() > 0)
+            break;
+        else if (ch == 8)
+        {
+            if (userName.length() > 0)
+            {
+                userName.pop_back();
+                cout << "\b \b";
+            }
+        }
+        else if ((97 <= ch && ch <= 122) || (ch == 95) || (48 <= ch && ch <= 57))
+        {
+            userName.push_back(ch);
+            cout << ch;
+        }
+    }
+    cout << "Searchin username....";
+    for (int i = 0; i < 5; i++)
+    {
+        cout << ".";
+        Sleep(200);
+    }
+    string confirmation;
+    bool founded = false;
+    while (temp != NULL)
+    {
+        if (temp->userName == userName)
+        {
+            system("cls");
+            if (temp->nextUser == NULL && temp->previousUser == NULL)
+            {
+                cout << "===================================================\n";
+                cout << "||                    User Details               ||\n";
+                cout << "===================================================\n";
+                cout << " Full Name       : " << temp->fullName << endl;
+                cout << " User Name       : " << temp->userName << endl;
+                cout << " Cell phone      : +880 " << temp->mobileNumber << endl;
+                cout << " Email           : " << temp->email << endl;
+                cout << " Region          : " << temp->region << endl;
+                cout << " Password        : " << temp->password << endl;
+                cout << " Total purchesed : " << temp->totalPurchasedAmount << " $" << endl;
+                cout << "===================================================\n\n";
+                cout << " are you sure want to delete this accout? (y/N) ";
+                getline(cin, confirmation);
+                if (confirmation == "y" || confirmation == "Y")
+                {
+                    cout << "Deleting account....";
+                    for (int i = 0; i < 5; i++)
+                    {
+                        cout << ".";
+                        Sleep(200);
+                    }
+                    cout << endl;
+                    if (head->nextUser == NULL)
+                    {
+                        delete head;
+                        head = NULL;
+                    }
+                    cout << "User has been successfully deleted\n";
+                    cout << "Press enter to continue....";
+                    cin.get();
+                    cout << "Loading.....";
+                    for (int i = 0; i < 5; i++)
+                    {
+                        cout << ".";
+                        Sleep(200);
+                    }
+                    founded = true;
+                    system("cls");
+                    adminUserList();
+                }
+                else
+                {
+                    cout << "Loading.....";
+                    for (int i = 0; i < 5; i++)
+                    {
+                        cout << ".";
+                        Sleep(200);
+                    }
+                    system("cls");
+                    adminUserList();
+                }
+                break;
+            }
+            else if (temp->previousUser == NULL)
+            {
+                cout << "===================================================\n";
+                cout << "||                    User Details               ||\n";
+                cout << "===================================================\n";
+                cout << " Full Name       : " << temp->fullName << endl;
+                cout << " User Name       : " << temp->userName << endl;
+                cout << " Cell phone      : +880 " << temp->mobileNumber << endl;
+                cout << " Email           : " << temp->email << endl;
+                cout << " Region          : " << temp->region << endl;
+                cout << " Password        : " << temp->password << endl;
+                cout << " Total purchesed : " << temp->totalPurchasedAmount << " $" << endl;
+                cout << "===================================================\n\n";
+                cout << " are you sure want to delete this accout? (y/N) ";
+                getline(cin, confirmation);
+                if (confirmation == "y" || confirmation == "Y")
+                {
+                    cout << "Deleting account....";
+                    for (int i = 0; i < 5; i++)
+                    {
+                        cout << ".";
+                        Sleep(200);
+                    }
+                    cout << endl;
+                    head = head->nextUser;
+                    head->previousUser = NULL;
+                    delete temp;
+                    cout << "User has been successfully deleted\n";
+                    cout << "Press enter to continue.....";
+                    string input;
+                    cin.get();
+                    cout << "Loading.....";
+                    for (int i = 0; i < 5; i++)
+                    {
+                        cout << ".";
+                        Sleep(200);
+                    }
+                    founded = true;
+                    system("cls");
+                    adminUserList();
+                }
+                else
+                {
+                    cout << "Loading.....";
+                    for (int i = 0; i < 5; i++)
+                    {
+                        cout << ".";
+                        Sleep(200);
+                    }
+                    system("cls");
+                    adminUserList();
+                }
+                break;
+            }
+            else if (temp->nextUser == NULL)
+            {
+                cout << "===================================================\n";
+                cout << "||                    User Details               ||\n";
+                cout << "===================================================\n";
+                cout << " Full Name       : " << temp->fullName << endl;
+                cout << " User Name       : " << temp->userName << endl;
+                cout << " Cell phone      : +880 " << temp->mobileNumber << endl;
+                cout << " Email           : " << temp->email << endl;
+                cout << " Region          : " << temp->region << endl;
+                cout << " Password        : " << temp->password << endl;
+                cout << " Total purchesed : " << temp->totalPurchasedAmount << " $" << endl;
+                cout << "===================================================\n\n";
+                cout << " are you sure want to delete this accout? (y/N) ";
+                getline(cin, confirmation);
+                if (confirmation == "y" || confirmation == "Y")
+                {
+                    cout << "Deleting account....";
+                    for (int i = 0; i < 5; i++)
+                    {
+                        cout << ".";
+                        Sleep(200);
+                    }
+                    cout << endl;
+                    newUser *previous;
+                    previous = temp->previousUser;
+                    previous->nextUser = NULL;
+                    temp->previousUser = NULL;
+                    delete temp;
+
+                    cout << "User has been successfully deleted\n";
+                    cout << "Press enter to continue.....";
+                    string input;
+                    cin.get();
+                    cout << "Loading.....";
+                    for (int i = 0; i < 5; i++)
+                    {
+                        cout << ".";
+                        Sleep(200);
+                    }
+                    founded = true;
+                    system("cls");
+                    adminUserList();
+                }
+                else
+                {
+                    cout << "Loading.....";
+                    for (int i = 0; i < 5; i++)
+                    {
+                        cout << ".";
+                        Sleep(200);
+                    }
+                    system("cls");
+                    adminUserList();
+                }
+                break;
+            }
+            else
+            {
+                cout << "===================================================\n";
+                cout << "||                    User Details               ||\n";
+                cout << "===================================================\n";
+                cout << " Full Name       : " << temp->fullName << endl;
+                cout << " User Name       : " << temp->userName << endl;
+                cout << " Cell phone      : +880 " << temp->mobileNumber << endl;
+                cout << " Email           : " << temp->email << endl;
+                cout << " Region          : " << temp->region << endl;
+                cout << " Password        : " << temp->password << endl;
+                cout << " Total purchesed : " << temp->totalPurchasedAmount << " $" << endl;
+                cout << "===================================================\n\n";
+                cout << " are you sure want to delete this accout? (y/N) ";
+                getline(cin, confirmation);
+                if (confirmation == "y" || confirmation == "Y")
+                {
+                    cout << "Deleting account....";
+                    for (int i = 0; i < 5; i++)
+                    {
+                        cout << ".";
+                        Sleep(200);
+                    }
+
+                    newUser *previous = temp->previousUser;
+                    newUser *next = temp->nextUser;
+
+                    previous->nextUser = next;
+                    temp->previousUser = NULL;
+
+                    next->previousUser = previous;
+                    temp->nextUser = NULL;
+
+                    cout << "User has been successfully deleted\n";
+                    cout << "Press enter to continue.....";
+                    string input;
+                    cin.get();
+                    cout << "Loading.....";
+                    for (int i = 0; i < 5; i++)
+                    {
+                        cout << ".";
+                        Sleep(200);
+                    }
+                    founded = true;
+                    system("cls");
+                    adminUserList();
+                }
+                else
+                {
+                    cout << "Loading.....";
+                    for (int i = 0; i < 5; i++)
+                    {
+                        cout << ".";
+                        Sleep(200);
+                    }
+                    system("cls");
+                    adminUserList();
+                }
+
+                break;
+            }
+        }
+        temp = temp->nextUser;
+    }
+    if (founded == false)
+    {
+        cout << endl;
+        cout << "username not found\n";
+        cout << "Press enter to continue....";
+        cin.get();
+        cout << "Loading.....";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+            Sleep(200);
+        }
+        system("cls");
+        deleteAUser();
+    }
 }
 void adminUserList()
 {
@@ -703,7 +1019,7 @@ void adminUserList()
     cout << "||            Buy Online Save Your Time          ||\n";
     cout << "===================================================\n";
     cout << "||              1. Display users                 ||\n";
-    cout << "||              2. Sort users (A-Z) and display  ||\n";
+    cout << "||              2. Display by region             ||\n";
     cout << "||              3. Delete user                   ||\n";
     cout << "||              4. Edit user                     ||\n";
     cout << "||              5. Back to login page            ||\n";
@@ -723,6 +1039,129 @@ void adminUserList()
         system("cls");
         adminDisplayUser();
     }
+    // TODO     Have to configure   asdfffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+    else if (choice == "2")
+    {
+    }
+
+    else if (choice == "3")
+    {
+        cout << "Loading...";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+            Sleep(200);
+        }
+        SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+        system("cls");
+        deleteAUser();
+    }
+    else if (choice == "4")
+    {
+        cout << "Loading....";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+            Sleep(200);
+        }
+        system("cls");
+        if (head == NULL)
+        {
+            cout << "No user exists!\n";
+            cout << "Press enter to continue.....";
+            string input;
+            cin.get();
+            cout << "Loading.....";
+            for (int i = 0; i < 5; i++)
+            {
+                cout << ".";
+            }
+            cout << endl;
+            system("cls");
+            adminUserList();
+        }
+
+        string userName;
+        newUser *temp = head;
+        cout << "===================================================\n";
+        cout << "||                MiHoYo Daily Goods             ||\n";
+        cout << "||            Buy Online Save Your Time          ||\n";
+        cout << "===================================================\n";
+        cout << "  Enter username: ";
+        while (true)
+        {
+            char ch;
+            ch = _getch();
+            if (ch == 13 && userName.length() > 0)
+                break;
+            else if (ch == 8)
+            {
+                if (userName.length() > 0)
+                {
+                    userName.pop_back();
+                    cout << "\b \b";
+                }
+            }
+            else if ((97 <= ch && ch <= 122) || (ch == 95) || (48 <= ch && ch <= 57))
+            {
+                userName.push_back(ch);
+                cout << ch;
+            }
+        }
+        cout << "Searchin username....";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+            Sleep(200);
+        }
+        bool founded = false;
+        while (temp != NULL)
+        {
+            if (temp->userName == userName)
+            {
+                string confirmation;
+                system("cls");
+                cout << "===================================================\n";
+                cout << "||                    User Details               ||\n";
+                cout << "===================================================\n";
+                cout << " Full Name       : " << temp->fullName << endl;
+                cout << " User Name       : " << temp->userName << endl;
+                cout << " Cell phone      : +880 " << temp->mobileNumber << endl;
+                cout << " Email           : " << temp->email << endl;
+                cout << " Region          : " << temp->region << endl;
+                cout << " Password        : " << temp->password << endl;
+                cout << " Total purchesed : " << temp->totalPurchasedAmount << " $" << endl;
+                cout << "===================================================\n\n";
+                cout << " are you sure want to edit this accout? (y/N) ";
+                getline(cin, confirmation);
+                if (confirmation == "y" || confirmation == "Y")
+                {
+                    cout << endl;
+                    cout << "Loading....";
+                    for (int i = 0; i < 5; i++)
+                    {
+                        cout << ".";
+                    }
+                    founded = true;
+                    system("cls");
+                    adminEditUser(temp);
+                }
+            }
+            temp = temp->nextUser;
+        }
+        if (founded == false)
+        {
+            cout << "username doesn't exists!";
+            cout << endl;
+            cout << "Loading....";
+            for (int i = 0; i < 5; i++)
+            {
+                cout << ".";
+            }
+            system("cls");
+            adminUserList();
+        }
+    }
     else if (choice == "5")
     {
         cout << endl;
@@ -735,6 +1174,11 @@ void adminUserList()
         cout << endl;
         system("cls");
         opeaningInterFace();
+    }
+    else
+    {
+        system("cls");
+        adminUserList();
     }
 }
 void adminDisplayUser2(newUser *temp)
