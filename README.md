@@ -23,3 +23,5 @@ push_back();
 pop_back();
 
 variableName.substr()=="i don't know"
+
+cin.ignore(numeric_limits<streamsize>::max(), '\n');
