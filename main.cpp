@@ -71,7 +71,7 @@ void displayUser3(newUser *temp, int count);
 void displayUser4(newUser *temp, int count);
 void adminDisplayUser2(newUser *temp);
 void deleteAUser();
-
+void userLoginInterFace();
 int main()
 {
     opeaningInterFace();
@@ -99,11 +99,11 @@ void opeaningInterFace()
     if (choice == "1")
     {
         SetConsoleTextAttribute(color, 91);
-        cout << "Loading..";
-        for (int i = 0; i < 3; i++)
+        cout << "Loading...";
+        for (int i = 0; i < 5; i++)
         {
             cout << ".";
-            sleep(1);
+            Sleep(200);
         }
         SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
         system("cls");
@@ -120,6 +120,7 @@ void opeaningInterFace()
         }
         SetConsoleTextAttribute(color, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
         system("cls");
+        userLoginInterFace();
     }
     else if (choice == "3")
     {
@@ -148,14 +149,34 @@ void adminLogin()
     cout << "||                MiHoYo Daily Goods             ||\n";
     cout << "||            Buy Online Save Your Time          ||\n";
     cout << "===================================================\n";
-    cout << "Enter user Name: ";
-    cin >> userName;
+    cout << "Enter username: ";
+    while (true)
+    {
+        char ch;
+        ch = _getch();
+        if (ch == 13 && userName.length() > 0)
+            break;
+        else if (ch == 8)
+        {
+            if (userName.length() > 0)
+            {
+                userName.pop_back();
+                cout << "\b \b";
+            }
+        }
+        else if ((97 <= ch && ch <= 122) || (ch == 95) || (48 <= ch && ch <= 57))
+        {
+            userName.push_back(ch);
+            cout << ch;
+        }
+    }
+    cout << endl;
     cout << "Enter password: ";
     char ch;
     while (true)
     {
         ch = _getch();
-        if (ch == 13)
+        if (ch == 13 && password.length() > 0)
             break;
         else if (ch == 8)
         {
@@ -165,7 +186,7 @@ void adminLogin()
                 cout << "\b \b";
             }
         }
-        else
+        else if (ch != 13)
         {
             password.push_back(ch);
             cout << ch;
@@ -234,9 +255,32 @@ void createUser()
     string fullName, userName, region, mobileNumber, email, password;
 
     commonStart();
+    fullName = "";
     cout << "Enter your full name: ";
-    cin.ignore();
-    getline(cin, fullName);
+    while (true)
+    {
+        char ch;
+        ch = _getch();
+        if (ch == 13 && fullName.length() > 0)
+        {
+            break;
+        }
+        else if (ch == 8)
+        {
+            if (fullName.length() > 0)
+            {
+                fullName.pop_back();
+                cout << "\b \b";
+            }
+        }
+        else if (ch != 13)
+        {
+            fullName.push_back(ch);
+            cout << ch;
+        }
+    }
+    cout << endl;
+
     SetConsoleTextAttribute(color, 91);
     cout << "Saving info...";
     for (int i = 0; i < 5; i++)
@@ -251,12 +295,12 @@ void createUser()
     {
         commonStart();
         userName = "";
-        cout << "Enter user name(must be unique): ";
+        cout << "Enter username(must be unique): ";
         while (true)
         {
             char ch;
             ch = _getch();
-            if (ch == 13)
+            if (ch == 13 && userName.length() > 0)
                 break;
             else if (ch == 8)
             {
@@ -453,7 +497,7 @@ void createUser()
     {
         char ch;
         ch = _getch();
-        if (ch == 13) // enter
+        if (ch == 13 && password.length() > 0) // enter
             break;
         else if (ch == 8) // backspace
         {
@@ -463,7 +507,7 @@ void createUser()
                 cout << "\b \b";
             }
         }
-        else if (ch != ' ')
+        else if (ch != ' ' && ch != 13)
         {
             password.push_back(ch);
             cout << ch;
@@ -1488,8 +1532,10 @@ void adminEditUser(newUser *&temp)
     {
         char ch;
         ch = _getch();
-        if (ch == 13)
+        if (ch == 13 && fullName.length() > 0)
+        {
             break;
+        }
         else if (ch == 8)
         {
             if (fullName.length() > 0)
@@ -1498,7 +1544,7 @@ void adminEditUser(newUser *&temp)
                 cout << "\b \b";
             }
         }
-        else
+        else if (ch != 13)
         {
             fullName.push_back(ch);
             cout << ch;
@@ -1523,12 +1569,12 @@ void adminEditUser(newUser *&temp)
         cout << "||            Buy Online Save Your Time          ||\n";
         cout << "===================================================\n";
         userName = temp->userName;
-        cout << " User Name: " << userName;
+        cout << " Username: " << userName;
         while (true)
         {
             char ch;
             ch = _getch();
-            if (ch == 13)
+            if (ch == 13 && userName.length() > 0)
                 break;
             else if (ch == 8)
             {
@@ -1729,7 +1775,7 @@ void adminEditUser(newUser *&temp)
     {
         char ch;
         ch = _getch();
-        if (ch == 13)
+        if (ch == 13 && password.length() > 0)
             break;
         else if (ch == 8)
         {
@@ -1739,7 +1785,7 @@ void adminEditUser(newUser *&temp)
                 cout << "\b \b";
             }
         }
-        else if (ch != ' ')
+        else if (ch != ' ' && ch != 13)
         {
             password.push_back(ch);
             cout << ch;
@@ -2051,4 +2097,12 @@ void displayUser4(newUser *temp, int count)
         adminUserList();
         break;
     }
+}
+void userLoginInterFace()
+{
+    cout << "===================================================\n";
+    cout << "||                MiHoYo Daily Goods             ||\n";
+    cout << "||            Buy Online Save Your Time          ||\n";
+    cout << "===================================================\n";
+    cout << "  Username: ";
 }
