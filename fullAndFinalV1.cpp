@@ -1461,12 +1461,12 @@ int adminOrderButton()
         cout << "===================================================\n";
         cout << "||               use (a/d) to change:            ||\n";
         cout << "===================================================\n";
-        cout << "  " << rear->userName << endl;
-        cout << "         Item name        : " << rear->itemName << endl;
-        cout << "         Order amount     : " << rear->orderedAmount << endl;
-        cout << "         Total Cost       : " << rear->totalPrice << endl;
-        cout << "         Region           : " << rear->region << endl;
-        cout << "         Locaiton         : " << rear->location << endl;
+        cout << "  " << front->userName << endl;
+        cout << "         Item name        : " << front->itemName << endl;
+        cout << "         Order amount     : " << front->orderedAmount << endl;
+        cout << "         Total Cost       : " << front->totalPrice << endl;
+        cout << "         Region           : " << front->region << endl;
+        cout << "         Locaiton         : " << front->location << endl;
         cout << "===================================================\n";
         for (int i = 0; i < total; i++)
         {
@@ -1521,6 +1521,18 @@ void deleteOrderHis()
 }
 void adminOrderHis()
 {
+    if (front == NULL)
+    {
+        cout << "No orders to process." << endl;
+        cout << "Loading....";
+        for (int i = 0; i < 5; i++)
+        {
+            cout << ".";
+            Sleep(200);
+        }
+        system("cls");
+        adminPage();
+    }
     int button = adminOrderButton();
     string itemName = front->itemName;
     string region = front->region;
@@ -1534,24 +1546,21 @@ void adminOrderHis()
 
         while (user != NULL)
         {
-            if (user->userName == rear->userName)
+            if (user->userName == front->userName)
             {
                 break;
             }
             user = user->nextUser;
         }
-        user->message += GREEN "\n===================================================\n||                 Order Confirmed               ||\n===================================================\n" RESET;
-        user->message += "\n    item Name     : ";
-        user->message += itemName;
-        user->message += "\n    Order amount  : ";
-        user->message += amount;
-        user->message += "\n    Total cost    : ";
-        user->message += price;
-        user->message += "\n    Region        : ";
-        user->message += region;
-        user->message += "\n    Location      : ";
-        user->message += location;
-        user->message += "\n";
+        if (user != NULL)
+        {
+            user->message += GREEN "\n===================================================\n||                 Order Confirmed               ||\n===================================================\n" RESET;
+            user->message += "\n    Item Name     : " + itemName;
+            user->message += "\n    Order amount  : " + to_string(amount);
+            user->message += "\n    Total cost    : " + to_string(price);
+            user->message += "\n    Region        : " + region;
+            user->message += "\n    Location      : " + location + "\n";
+        }
         deleteOrderHis();
         cout << "Press enter to continue....";
         cin.get();
@@ -1568,24 +1577,21 @@ void adminOrderHis()
     case 1:
         while (user != NULL)
         {
-            if (user->userName == rear->userName)
+            if (user->userName == front->userName)
             {
                 break;
             }
             user = user->nextUser;
         }
-        user->message += RED "\n===================================================\n||                 Order Cancelled               ||\n===================================================\n" RESET;
-        user->message += "\n    item Name     : ";
-        user->message += itemName;
-        user->message += "\n    Order amount  : ";
-        user->message += amount;
-        user->message += "\n    Total cost    : ";
-        user->message += price;
-        user->message += "\n    Region        : ";
-        user->message += region;
-        user->message += "\n    Location      : ";
-        user->message += location;
-        user->message += "\n";
+        if (user != NULL)
+        {
+            user->message += RED "\n===================================================\n||                 Order Cancelled              ||\n===================================================\n" RESET;
+            user->message += "\n    Item Name     : " + itemName;
+            user->message += "\n    Order amount  : " + to_string(amount);
+            user->message += "\n    Total cost    : " + to_string(price);
+            user->message += "\n    Region        : " + region;
+            user->message += "\n    Location      : " + location + "\n";
+        }
         deleteOrderHis();
         cout << "Press enter to continue....";
         cin.get();
@@ -3857,9 +3863,8 @@ void userInterFace(string userName)
 }
 void userConfirmOrder(cartUser *user, cartItem *item)
 {
-    adminOrderHistory *tempHistrory = rear;
     adminOrderHistory *newHistory = new adminOrderHistory(user->fullName, user->userName, item->itemName, item->orderddAmount, item->orderedPrice, item->region, item->location);
-    if (rear == NULL)
+    if (rear == NULL && front == NULL)
     {
         rear = newHistory;
         front = newHistory;
