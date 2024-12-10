@@ -774,9 +774,9 @@ void createUser()
     cout << "Email           : " << email << endl;
     cout << "Region          : " << region << endl;
     cout << "Password        : " << password << endl;
+    cout << "===================================================\n";
     cout << endl;
-    cout << "Type 'cancel' to cancel the form and create a new form OR 'exit' to back to login page or press enter to confirm......";
-
+    cout << "Type 'cancel' to cancel the form or create a new form \nOR 'exit' to back to login page \nOr press enter to confirm......";
     string input;
     getline(cin, input);
 
@@ -1555,6 +1555,9 @@ void adminOrderHis()
     double amount = front->orderedAmount;
     double price = front->totalPrice;
     newUser *user = head;
+    catagory *tempCat2 = catHead;
+    item *tt = tempCat2->itemHead;
+    bool stockItem = false;
     switch (button)
     {
     case 0:
@@ -1599,6 +1602,22 @@ void adminOrderHis()
             }
             user = user->nextUser;
         }
+
+        while (tempCat2 != NULL)
+        {
+            tt = tempCat2->itemHead;
+            while (tt != NULL)
+            {
+                if (tt->name == front->itemName)
+                {
+                    tt->inStock += front->orderedAmount;
+                    break;
+                }
+                tt = tt->nextItem;
+            }
+            tempCat2 = tempCat2->nextCat;
+        }
+
         if (user != NULL)
         {
             user->message += RED "\n===================================================\n||                 Order Cancelled              ||\n===================================================\n" RESET;
@@ -3894,6 +3913,7 @@ void userConfirmOrder(cartUser *user, cartItem *item)
 
 void reduction(cartItem *tempItem)
 {
+    bool found = false;
     catagory *tempCat = catHead;
     while (tempCat != NULL)
     {
@@ -3903,8 +3923,11 @@ void reduction(cartItem *tempItem)
             if (tt->name == tempItem->itemName)
             {
                 tt->inStock -= tempItem->orderddAmount;
+                found == true;
                 break;
             }
+            if (found == true)
+                break;
             tt = tt->nextItem;
         }
         tempCat = tempCat->nextCat;
@@ -3972,6 +3995,7 @@ void userViewCart(string userName)
                         stockItem = true;
                         break;
                     }
+                    break;
                 }
                 tt = tt->nextItem;
             }
