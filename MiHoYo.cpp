@@ -4138,10 +4138,52 @@ void userDetails(newUser *temp)
 }
 void catagoryCreation()
 {
+    catagory *temp = catHead;
     string catName;
-    cout << "Enter catagory name: ";
-    cin.ignore();
-    getline(cin, catName);
+    bool found = false;
+    while (true)
+    {
+        cout << "===================================================\n";
+        cout << "||                MiHoYo Daily Goods             ||\n";
+        cout << "||            Buy Online Save Your Time          ||\n";
+        cout << "===================================================\n";
+        cout << "Enter catagory name: ";
+        while (true)
+        {
+            char ch;
+            ch = _getch();
+            if (ch == 13 && catName.length() > 0)
+            {
+                break;
+            }
+            else if (ch == 8)
+            {
+                if (catName.length() > 0)
+                {
+                    catName.pop_back();
+                    cout << "\b \b";
+                }
+            }
+            else if (ch != 13)
+            {
+                catName.push_back(ch);
+                cout << ch;
+            }
+        }
+        cout << endl;
+        while (temp != NULL)
+        {
+            if (catName == temp->name)
+                found = true;
+            temp = temp->nextCat;
+        }
+        if (found == false)
+            break;
+        cout << "Alreay exists\n";
+        cout << "Press enter to continue....";
+        cin.get();
+        system("cls");
+    }
 
     if (catHead == NULL)
     {
