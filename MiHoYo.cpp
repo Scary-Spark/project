@@ -1567,6 +1567,7 @@ void adminOrderHis()
             }
             user = user->nextUser;
         }
+        user->totalPurchasedAmount += price;
         if (user != NULL)
         {
             user->message += GREEN "\n===================================================\n||                 Order Confirmed               ||\n===================================================\n" RESET;
@@ -3904,7 +3905,7 @@ void reduction(cartItem *tempItem)
                 tt->inStock -= tempItem->orderddAmount;
                 break;
             }
-            break;
+            tt = tt->nextItem;
         }
         tempCat = tempCat->nextCat;
     }
@@ -3941,6 +3942,9 @@ void userViewCart(string userName)
     }
     int selected = userCartButton(tempCartUser);
     cartItem *tempItem = tempCartUser->cartItemHead;
+    catagory *tempCat2 = catHead;
+    item *tt = tempCat2->itemHead;
+    bool stockItem = false;
     switch (selected)
     {
     case 0:
@@ -3952,8 +3956,33 @@ void userViewCart(string userName)
             Sleep(200);
         }
         system("cls");
-        userConfirmOrder(tempCartUser, tempItem);
-        reduction(tempItem);
+
+        while (tempCat2 != NULL)
+        {
+            tt = tempCat2->itemHead;
+            while (tt != NULL)
+            {
+                if (tt->name == tempItem->itemName)
+                {
+                    if (tt->inStock < tempItem->orderddAmount)
+                    {
+                        cout << "Out of stock\n";
+                        cout << "Press enter to remove.....";
+                        cin.get();
+                        stockItem = true;
+                        break;
+                    }
+                }
+                tt = tt->nextItem;
+            }
+            tempCat2 = tempCat2->nextCat;
+        }
+
+        if (stockItem == false)
+        {
+            userConfirmOrder(tempCartUser, tempItem);
+            reduction(tempItem);
+        }
         tempCartUser->removeFromCart();
         cout << "Loading.....";
         for (int i = 0; i < 5; i++)

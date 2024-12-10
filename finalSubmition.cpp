@@ -1567,6 +1567,7 @@ void adminOrderHis()
             }
             user = user->nextUser;
         }
+        user->totalPurchasedAmount += price;
         if (user != NULL)
         {
             user->message += GREEN "\n===================================================\n||                 Order Confirmed               ||\n===================================================\n" RESET;
